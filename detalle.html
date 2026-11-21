@@ -14,7 +14,8 @@
     border: 1px solid var(--linea); box-shadow: 0 3px 10px rgba(60,40,20,.28);
   }
   .tarjeta::before { content: ""; position: absolute; inset: 7px; border: 2px solid var(--tinta); opacity: .5; pointer-events: none; }
-  .tarjeta .foto img { aspect-ratio: 15 / 8; }
+  .tarjeta .foto { max-width: 340px; margin: 0 auto; }
+  .tarjeta .foto img { aspect-ratio: 3 / 4; }
   .cab { text-align: center; padding: 18px 10px 4px; }
   .num { font-size: 13px; color: var(--borgona); letter-spacing: .2em; }
   h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(24px, 6vw, 34px); line-height: 1.1; margin: 6px 0 12px; }
