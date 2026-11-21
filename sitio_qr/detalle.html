@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .pagina { max-width: 640px; margin: 0 auto; padding: 18px 16px 48px; }
+  .volver { display: inline-block; margin-bottom: 14px; color: var(--borgona); text-decoration: none; font-size: 14px; }
+  .volver:hover { text-decoration: underline; }
+  .tarjeta {
+    position: relative; background: #fbf5e4; padding: 16px;
+    border: 1px solid var(--linea); box-shadow: 0 3px 10px rgba(60,40,20,.28);
+  }
+  .tarjeta::before { content: ""; position: absolute; inset: 7px; border: 2px solid var(--tinta); opacity: .5; pointer-events: none; }
+  .tarjeta .foto img { aspect-ratio: 15 / 8; }
+  .cab { text-align: center; padding: 18px 10px 4px; }
+  .num { font-size: 13px; color: var(--borgona); letter-spacing: .2em; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(24px, 6vw, 34px); line-height: 1.1; margin: 6px 0 12px; }
+  .desc { font-style: italic; color: var(--tinta-suave); text-align: center; margin: 4px 14px 6px; }
+  .datos { padding: 0 12px 10px; }
+  dl { margin: 0; }
+  .fila { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; }
+  dt { font-family: 'Special Elite', 'Courier New', monospace; font-size: 14px; color: var(--tinta-suave); white-space: nowrap; }
+  .puntos { flex: 1; border-bottom: 2px dotted var(--linea); transform: translateY(-4px); }
+  dd { margin: 0; font-weight: 600; text-align: right; }
+  .barra { height: 12px; border: 2px solid var(--tinta); background: #f1e6cc; margin-top: 4px; }
+  .barra > div { height: 100%; background: repeating-linear-gradient(45deg, var(--borgona) 0 6px, #a9473f 6px 12px); }
+  .centro { text-align: center; padding: 8px 0 14px; }
+  #error { padding: 30px; text-align: center; font-style: italic; color: var(--tinta-suave); }
+  .qr { text-align: center; margin-top: 16px; font-size: 12px; color: var(--tinta-suave); }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="volver maquina" href="index.html">← Volver al catálogo</a>
+  <div id="contenido"></div>
+</div>
+<script>
+const cont = document.getElementById('contenido');
+const id = new URLSearchParams(location.search).get('id');
+const clase = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '-');
+const fecha = s => { const [y, m, d] = s.split('-'); return d + '/' + m + '/' + y; };
+
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; }
+
+function fila(dl, k, v) {
+  const f = el('div', 'fila');
+  const dt = el('dt', '', k);
+  const dd = el('dd');
+  if (v instanceof Node) dd.append(v); else dd.textContent = v;
+  f.append(dt, el('span', 'puntos'), dd);
+  dl.append(f);
+}
+
+fetch('datos.json').then(r => r.json()).then(datos => {
+  const d = datos.find(x => String(x.id) === String(id));
+  if (!d) { cont.append(el('div', '', 'Registro no encontrado.')); cont.firstChild.id = 'error'; return; }
+  document.title = d.titulo;
+
+  const t = el('div', 'tarjeta');
+  const foto = el('div', 'foto');
+  const img = el('img'); img.src = d.imagen; img.alt = d.titulo;
+  foto.append(img);
+
+  const cab = el('div', 'cab');
+  cab.append(el('div', 'num maquina', 'REGISTRO N.º ' + String(d.id).padStart(3, '0')),
+             el('h1', '', d.titulo));
+  const sello = el('span', 'sello ' + clase(d.estado), d.estado);
+  const centro = el('div', 'centro'); centro.append(sello);
+
+  const hr = el('hr', 'filete');
+  const dl = el('dl');
+  const barra = el('div', 'barra'); const rel = el('div'); rel.style.width = Math.round(d.avance * 100) + '%'; barra.append(rel);
+  const av = el('div'); av.append(document.createTextNode(Math.round(d.avance * 100) + ' %'), barra);
+  av.style.minWidth = '110px';
+
+  fila(dl, 'Departamento', d.departamento);
+  fila(dl, 'Prioridad', d.prioridad);
+  fila(dl, 'Responsable', d.responsable);
+  fila(dl, 'Inicio', fecha(d.fecha_inicio));
+  fila(dl, 'Entrega', fecha(d.fecha_entrega));
+  fila(dl, 'Avance', av);
+
+  const datosDiv = el('div', 'datos'); datosDiv.append(dl);
+  t.append(foto, cab, centro, el('p', 'desc', d.descripcion), hr, datosDiv, el('div', 'estrella', '✦ ✦ ✦'));
+  cont.append(t);
+}).catch(() => { const e = el('div', '', 'No se pudo cargar datos.json (abra el sitio desde GitHub Pages, no como archivo local).'); e.id = 'error'; cont.append(e); });
+</script>
+</body>
+</html>

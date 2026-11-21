@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Special+Elite&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --papel: #f1e6cc;
+  --papel-oscuro: #e4d4af;
+  --tinta: #3a2a1d;
+  --tinta-suave: #6b5540;
+  --borgona: #8a2f29;
+  --mostaza: #c4912c;
+  --verde: #3d5a4f;
+  --linea: #b9a173;
+}
+* { box-sizing: border-box; }
+html { background: var(--papel-oscuro); }
+body {
+  margin: 0;
+  font-family: 'Lora', Georgia, serif;
+  color: var(--tinta);
+  background:
+    radial-gradient(ellipse at top, rgba(255,255,255,.35), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(120,90,50,.035) 0 2px, transparent 2px 4px),
+    var(--papel);
+  min-height: 100vh;
+}
+.titulo-display { font-family: 'Playfair Display', 'Times New Roman', serif; }
+.maquina { font-family: 'Special Elite', 'Courier New', monospace; }
+
+/* Ornamento de doble línea */
+.filete {
+  border: 0; height: 7px; margin: 14px auto;
+  border-top: 2px solid var(--tinta); border-bottom: 1px solid var(--tinta);
+}
+.estrella { text-align: center; color: var(--borgona); letter-spacing: .6em; font-size: 14px; }
+
+/* Sello de estado */
+.sello {
+  display: inline-block;
+  font-family: 'Special Elite', 'Courier New', monospace;
+  text-transform: uppercase; letter-spacing: .08em; font-size: 12px;
+  padding: 3px 9px; border: 2px solid currentColor; border-radius: 3px;
+  transform: rotate(-3deg); opacity: .9;
+}
+.sello.completado   { color: var(--verde); }
+.sello.en-progreso  { color: var(--mostaza); }
+.sello.en-revision  { color: #4a5f8a; }
+.sello.bloqueado    { color: var(--borgona); }
+.sello.no-iniciado  { color: var(--tinta-suave); }
+
+/* Foto con marco de retrato antiguo */
+.foto {
+  background: #fbf5e4; padding: 8px;
+  border: 1px solid var(--linea);
+  box-shadow: 0 2px 6px rgba(60,40,20,.25);
+}
+.foto img { display: block; width: 100%; object-fit: cover; filter: sepia(.35) contrast(1.02); }
