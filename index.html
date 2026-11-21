@@ -22,10 +22,9 @@
   main {
     max-width: 1100px; margin: 0 auto; padding: 18px 16px 48px;
     display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    align-items: start;
   }
   a.ficha {
-    display: block; text-decoration: none; color: inherit; position: relative;
+    display: flex; flex-direction: column; text-decoration: none; color: inherit; position: relative;
     background: #fbf5e4; padding: 10px;
     border: 1px solid var(--linea);
     box-shadow: 0 2px 5px rgba(60,40,20,.22);
@@ -37,11 +36,11 @@
   a.ficha:hover, a.ficha:focus-visible { transform: translateY(-3px) rotate(-.4deg); box-shadow: 0 8px 16px rgba(60,40,20,.3); outline: none; }
   a.ficha:focus-visible { outline: 3px solid var(--mostaza); }
   a.ficha .foto { padding: 5px; box-shadow: none; }
-  a.ficha img { height: auto; max-height: 380px; }
-  .cuerpo { padding: 12px 8px 6px; }
+  a.ficha img { aspect-ratio: 3 / 4; object-fit: contain; background: #f1e6cc; }
+  .cuerpo { padding: 12px 8px 6px; flex: 1; display: flex; flex-direction: column; }
   .num { font-size: 12px; color: var(--borgona); letter-spacing: .12em; }
   .nombre { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; line-height: 1.2; margin: 4px 0 10px; }
-  .pie { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; color: var(--tinta-suave); }
+  .pie { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; color: var(--tinta-suave); }
   #vacio { text-align: center; color: var(--tinta-suave); font-style: italic; padding: 24px; display: none; }
   footer { text-align: center; padding: 0 16px 36px; }
 </style>
