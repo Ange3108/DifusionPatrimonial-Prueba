@@ -4,7 +4,7 @@ Uso:
     python generar.py URL_DEL_SITIO [ARCHIVO.xlsx|ARCHIVO.csv]
 
 Ejemplo:
-    python generar.py https://USUARIO.github.io/REPOSITORIO/ registros.xlsx
+    python generar.py https://ange3108.github.io/DifusionPatrimonial-Prueba/ registros.xlsx
 
 Acepta el archivo exportado desde Microsoft Lists (Excel o CSV).
 Si una fila ya tiene su imagen en imagenes/ID.(jpg|jpeg|png|webp|svg) se usa esa;
@@ -16,7 +16,7 @@ import json, os, sys
 import pandas as pd
 import qrcode
 
-BASE_URL = sys.argv[1] if len(sys.argv) > 1 else "https://USUARIO.github.io/REPOSITORIO/"
+BASE_URL = sys.argv[1] if len(sys.argv) > 1 else "https://ange3108.github.io/DifusionPatrimonial-Prueba/"
 if not BASE_URL.endswith("/"):
     BASE_URL += "/"
 ARCHIVO = sys.argv[2] if len(sys.argv) > 2 else "lista_sharepoint_prueba.xlsx"
